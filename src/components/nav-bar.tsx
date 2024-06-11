@@ -89,7 +89,10 @@ const NavBar = () => {
 
         <div className="w-full overflow-x-scroll flex flex-row gap-[100px] scrollbar-thin scrollbar-thumb-[#22222a]  ">
           {genre.map((item) => (
-            <Link key={item.id} href={""}>
+            <Link
+              key={item.id}
+              href={`/genre/${item.id}?genre=${item.name.toLocaleLowerCase()}`}
+            >
               <p key={item.id} className="flex items-center flex-row">
                 {item.name}
               </p>

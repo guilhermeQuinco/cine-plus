@@ -8,14 +8,11 @@ const BASE_IMG_URL = "https://image.tmdb.org/t/p/w500";
 
 interface IMovie {
   id: number;
-  title: string;
   poster_path: string;
 }
 
-const Discover = () => {
-  const [title, setTitle] = useState("");
+const Genre = () => {
   const [movies, setMovies] = useState<IMovie[]>([]);
-  const [discover, setDiscover] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -24,67 +21,42 @@ const Discover = () => {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    // puxa o parametro
-    const id = params.id.toString();
-    //pega o valor do parametro
+    const id = params.id;
+    const genre = searchParams.get("genre");
     const page = searchParams.get("page");
 
-    setDiscover(id);
-    switch (id) {
-      case "now_playing":
-        setTitle("Now playing Movies");
-        break;
-
-      case "top_rated":
-        setTitle("Top Rated Movies");
-        break;
-
-      case "popular":
-        setTitle("Popular Movies");
-        break;
-
-      case "upcoming":
-        setTitle("Upcoming Movies");
-        break;
-
-      default:
-        setTitle("");
-        break;
-    }
-
     axiosInstance
-      .get(`/movie/${id}`, {
+      .get(`/discover/movie`, {
         params: {
           api_key: process.env.NEXT_PUBLIC_API_KEY,
+          With_genres: id,
           page,
         },
       })
       .then((response) => {
         setMovies(response.data.results);
-        setCurrentPage(response.data.page);
         setTotalPages(response.data.total_pages);
+        setCurrentPage(response.data.page);
       });
   }, [params.id, searchParams.get("page")]);
 
   const handlePage = (button: string) => {
     let page = "";
+    button === "back"
+      ? (page = `page=${currentPage - 1}`)
+      : (page = `page=${currentPage + 1}`);
 
-    if (button === "back") {
-      page = `page=${currentPage - 1}`;
-    } else {
-      page = `page=${currentPage + 1}`;
-    }
-
-    router.push(`/discover/${discover}?${page}`);
+    router.push(
+      `/genre/${params.id}?genre=${searchParams.get("genre")}&${page}`
+    );
   };
 
   return (
     <div className="bg-gray-800  w-full">
       <div className="max-w-[1640px] mx-auto flex flex-col gap-10 items-center">
-        <h1 className="mt-10 text-left font-bold">{title}</h1>
         <div className="grid grid-cols-6 gap-8  ">
-          {movies?.map((item, index) => (
-            <div className="relative" key={index}>
+          {movies?.map((item) => (
+            <div className="relative" key={item.id}>
               <img
                 src={`${BASE_IMG_URL}/${item.poster_path}`}
                 alt="poster"
@@ -113,4 +85,4 @@ const Discover = () => {
   );
 };
 
-export default Discover;
+export default Genre;
