@@ -30,4 +30,12 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+
+  .navLink {
+    @apply text-gray-600;
+  }
+
+  .navLinkActive {
+    @apply text-white;
+  }
 }
