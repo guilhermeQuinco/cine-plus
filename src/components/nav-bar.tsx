@@ -2,7 +2,7 @@
 
 import { axiosInstance } from "@/app/api/api";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 
@@ -14,13 +14,15 @@ interface IGenre {
 const NavBar = () => {
   const [genre, setGenre] = useState<IGenre[]>([]);
   const [selectedGenre, setSelectedGenre] = useState("");
+  const [search, setSearch] = useState("");
 
+  const router = useRouter();
   const params = useParams();
 
   useEffect(() => {
     axiosInstance
       .get(
-        `/genre/movie/list?api_key=65c66cd0f6941151d6b841324cad5808&language=en`
+        `/genre/movie/list?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en`
       )
       .then((response) => {
         setGenre(response.data.genres);
@@ -30,6 +32,12 @@ const NavBar = () => {
   useEffect(() => {
     setSelectedGenre(params.id.toString());
   }, [params.id]);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSearch("");
+    router.push(`/search/${search}?page=1`);
+  };
 
   return (
     <div className="w-full overflow-hidden">
@@ -76,11 +84,15 @@ const NavBar = () => {
             </ul>
 
             <div className="flex flex-row items-center gap-3">
-              <input
-                type="text"
-                placeholder="Search Movie....."
-                className="bg-gray-900 p-2 rounded-lg outline-none"
-              />
+              <form onSubmit={handleSearch}>
+                <input
+                  type="text"
+                  placeholder="Search Movie....."
+                  className="bg-gray-900 p-2 rounded-lg outline-none"
+                  onChange={(e) => setSearch(e.target.value)}
+                  value={search}
+                />
+              </form>
 
               <BiSearch size={30} />
             </div>

@@ -29,7 +29,7 @@ const Genre = () => {
       .get(`/discover/movie`, {
         params: {
           api_key: process.env.NEXT_PUBLIC_API_KEY,
-          With_genres: id,
+          with_genres: id,
           page,
         },
       })
