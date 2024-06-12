@@ -12,6 +12,8 @@ const Search = () => {
   const params = useParams();
   const searchParams = useSearchParams();
 
+  console.log(params);
+
   useEffect(() => {
     const searchValue = params.id;
     const page = searchParams.get("page");

@@ -1,6 +1,7 @@
 import { IMovie } from "@/models/IMovie";
 import { BASE_URL_IMAGE } from "@/utils";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 interface CardProps {
@@ -9,15 +10,20 @@ interface CardProps {
 
 const Card = ({ movie }: CardProps) => {
   return (
-    <div className="group relative hover:scale-125 hover:z-10 transition ease-out duration-300">
-      <img
-        src={`${BASE_URL_IMAGE}/${movie.poster_path}`}
-        alt="poster"
-        className="object-cover w-[100% ] h-[380px]"
-      />
+    <Link href={`/details/${movie.id}`}>
+      {" "}
+      <div className="group relative hover:scale-110 hover:z-10 hover:shadow-xl transition ease-linear duration-100 rounded-lg ">
+        <img
+          src={`${BASE_URL_IMAGE}/${movie.poster_path}`}
+          alt="poster"
+          className="object-cover w-[100%] h-[360px] rounded-lg group-hover:rounded-b-none "
+        />
 
-      <div className="invisible bg-black group-hover:visible absolute"></div>
-    </div>
+        <div className="invisible bg-black group-hover:visible absolute p-5 ">
+          <span className=" ">{movie.overview}</span>
+        </div>
+      </div>
+    </Link>
   );
 };
 

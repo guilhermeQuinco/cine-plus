@@ -50,6 +50,7 @@ const Discover = () => {
       .get(`/movie/${id}`, {
         params: {
           api_key: process.env.NEXT_PUBLIC_API_KEY,
+          language: "pt",
           page,
         },
       })
@@ -76,7 +77,7 @@ const Discover = () => {
     <div className="bg-gray-800  w-full">
       <div className="max-w-[1640px] mx-auto flex flex-col gap-10 items-center">
         <h1 className="mt-10 text-left font-bold">{title}</h1>
-        <div className="grid grid-cols-6 gap-8  ">
+        <div className="grid grid-cols-6 gap-5  ">
           {movies?.map((movie) => (
             <Card movie={movie} key={movie.id} />
           ))}

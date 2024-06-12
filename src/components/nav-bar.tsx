@@ -19,6 +19,8 @@ const NavBar = () => {
   const router = useRouter();
   const params = useParams();
 
+  console.log(params);
+
   useEffect(() => {
     axiosInstance
       .get(

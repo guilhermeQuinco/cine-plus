@@ -1,15 +1,10 @@
 "use client";
 
 import { axiosInstance } from "@/app/api/api";
+import Card from "@/components/card";
+import { IMovie } from "@/models/IMovie";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-
-const BASE_IMG_URL = "https://image.tmdb.org/t/p/w500";
-
-interface IMovie {
-  id: number;
-  poster_path: string;
-}
 
 const Genre = () => {
   const [movies, setMovies] = useState<IMovie[]>([]);
@@ -55,14 +50,8 @@ const Genre = () => {
     <div className="bg-gray-800  w-full">
       <div className="max-w-[1640px] mx-auto flex flex-col gap-10 items-center">
         <div className="grid grid-cols-6 gap-8  ">
-          {movies?.map((item) => (
-            <div className="relative" key={item.id}>
-              <img
-                src={`${BASE_IMG_URL}/${item.poster_path}`}
-                alt="poster"
-                className="object-cover w-[100%] h-[380px]"
-              />
-            </div>
+          {movies?.map((movie) => (
+            <Card movie={movie} key={movie.id} />
           ))}
         </div>
 
