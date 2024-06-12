@@ -1,6 +1,5 @@
+import { BASE_URL } from "@/utils";
 import axios from "axios";
-
-const BASE_URL = `https://api.themoviedb.org/3`;
 
 const token = process.env.TOKEN || "";
 
