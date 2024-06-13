@@ -4,7 +4,6 @@ import { axiosInstance } from "@/app/api/api";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { BiSearch } from "react-icons/bi";
 
 interface IGenre {
   id: number;
@@ -18,8 +17,6 @@ const NavBar = () => {
 
   const router = useRouter();
   const params = useParams();
-
-  console.log(params);
 
   useEffect(() => {
     axiosInstance
@@ -38,7 +35,7 @@ const NavBar = () => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     setSearch("");
-    router.push(`/search/${search}?page=1`);
+    router.push(`/search/${search}`);
   };
 
   return (
@@ -95,8 +92,6 @@ const NavBar = () => {
                   value={search}
                 />
               </form>
-
-              <BiSearch size={30} />
             </div>
           </div>
         </div>

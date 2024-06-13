@@ -2,9 +2,10 @@
 
 import { axiosInstance } from "@/app/api/api";
 import Card from "@/components/card";
+import Loading from "@/components/loading";
 import { IMovie } from "@/models/IMovie";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const Discover = () => {
   const [title, setTitle] = useState("");
@@ -12,16 +13,16 @@ const Discover = () => {
   const [discover, setDiscover] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
   const params = useParams();
   const searchParams = useSearchParams();
+  const loader = useRef(null);
 
   useEffect(() => {
     // puxa o parametro
     const id = params.id.toString();
-    //pega o valor do parametro
-    const page = searchParams.get("page");
 
     setDiscover(id);
     switch (id) {
@@ -46,32 +47,35 @@ const Discover = () => {
         break;
     }
 
-    axiosInstance
-      .get(`/movie/${id}`, {
-        params: {
-          api_key: process.env.NEXT_PUBLIC_API_KEY,
-          language: "pt",
-          page,
-        },
-      })
-      .then((response) => {
-        setMovies(response.data.results);
-        setCurrentPage(response.data.page);
-        setTotalPages(response.data.total_pages);
-      });
-  }, [params.id, searchParams.get("page")]);
-
-  const handlePage = (button: string) => {
-    let page = "";
-
-    if (button === "back") {
-      page = `page=${currentPage - 1}`;
-    } else {
-      page = `page=${currentPage + 1}`;
+    try {
+      setIsLoading(true);
+      axiosInstance
+        .get(`/movie/${id}`, {
+          params: {
+            api_key: process.env.NEXT_PUBLIC_API_KEY,
+            language: "en",
+            page: currentPage,
+          },
+        })
+        .then((response) => {
+          setMovies((prevMovies) => [...prevMovies, ...response.data.results]);
+          setCurrentPage(response.data.page);
+          setTotalPages(response.data.total_pages);
+          setIsLoading(false);
+        });
+    } catch (error) {
+      console.error(error);
     }
+  }, [currentPage, params.id, searchParams.get("page")]);
 
-    router.push(`/discover/${discover}?${page}`);
-  };
+  useEffect(() => {
+    const intersectionObserver = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        setCurrentPage((currentPageInside) => currentPageInside + 1);
+      }
+    });
+    if (loader.current) intersectionObserver.observe(loader.current);
+  }, []);
 
   return (
     <div className="bg-gray-800  w-full">
@@ -82,21 +86,8 @@ const Discover = () => {
             <Card movie={movie} key={movie.id} />
           ))}
         </div>
-
-        <div className="flex flex-row gap-5">
-          <button
-            onClick={() => handlePage("back")}
-            className={currentPage === 1 ? "hidden" : ""}
-          >
-            Back
-          </button>
-          <button
-            onClick={() => handlePage("next")}
-            className={currentPage === totalPages ? "hidden" : ""}
-          >
-            Next
-          </button>
-        </div>
+        {isLoading && <Loading />}
+        <div ref={loader} />
       </div>
     </div>
   );

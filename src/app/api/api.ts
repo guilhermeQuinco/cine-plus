@@ -5,7 +5,7 @@ const token = process.env.TOKEN || "";
 
 export const axiosInstance = axios.create({
   baseURL: `${BASE_URL}`,
-  timeout: 5000,
+  timeout: 8000,
   headers: {
     accept: "application/json",
     Authorization: `Bearer ${token}`,
