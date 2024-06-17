@@ -7,3 +7,5 @@ export function conventToHours(totalMinutes: number) {
 
   return { hours, minutes };
 }
+
+export function infiniteScroll(loader: any) {}
