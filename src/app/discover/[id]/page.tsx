@@ -89,7 +89,6 @@ const Discover = () => {
         {isLoading && <Loading />}
         <div ref={loader} />
       </div>
-      first
     </div>
   );
 };

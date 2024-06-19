@@ -29,7 +29,9 @@ const NavBar = () => {
   }, []);
 
   useEffect(() => {
-    setSelectedGenre(params.id.toString());
+    if (params.id) {
+      setSelectedGenre(params.id.toString());
+    }
   }, [params.id]);
 
   const handleSearch = (e: React.FormEvent) => {

@@ -1,20 +1,33 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
+"use client";
+
+import { use, useEffect, useState } from "react";
+import { IMovie } from "@/models/IMovie";
+import { axiosInstance } from "./api/api";
+import { BASE_URL_IMAGE } from "@/utils";
+import Link from "next/link";
+import Card from "@/components/card";
 
 export default function Home() {
-  <main className="w-full overflow-hidden">
-    <div className="max-w-[1640px] mx-auto flex flex-col gap-10 items-center">
-      <Swiper pagination={true} modules={[Pagination]} className="mySwiper">
-        <SwiperSlide>Slide 1</SwiperSlide>
-        <SwiperSlide>Slide 2</SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
-        <SwiperSlide>Slide 4</SwiperSlide>
-        <SwiperSlide>Slide 5</SwiperSlide>
-        <SwiperSlide>Slide 6</SwiperSlide>
-        <SwiperSlide>Slide 7</SwiperSlide>
-        <SwiperSlide>Slide 8</SwiperSlide>
-        <SwiperSlide>Slide 9</SwiperSlide>
-      </Swiper>
-    </div>
-  </main>;
+  const [slideMovies, setSlideMovies] = useState<IMovie[]>([]);
+
+  useEffect(() => {
+    axiosInstance
+      .get(`/discover/movie`, {
+        params: {
+          api_key: process.env.NEXT_PUBLIC_API_KEY,
+        },
+      })
+      .then((response) =>
+        setSlideMovies((prevMovies) => [
+          ...prevMovies,
+          ...response.data.results,
+        ])
+      );
+  }, []);
+
+  return (
+    <main className="w-full overflow-hidden ">
+      <div className="max-w-[1640px] mx-auto flex flex-col h-[600px] gap-10 items-center"></div>
+    </main>
+  );
 }
