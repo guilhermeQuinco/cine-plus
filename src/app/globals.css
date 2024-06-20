@@ -108,6 +108,6 @@ body {
   }
 
   .navLinkActive {
-    @apply text-white;
+    @apply text-white bg-gradient-to-r from-purple-700 to-purple-400;
   }
 }
