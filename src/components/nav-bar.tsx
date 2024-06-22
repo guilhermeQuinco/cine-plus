@@ -98,7 +98,7 @@ const NavBar = () => {
           </div>
         </div>
 
-        {/* <div className="w-full overflow-x-scroll flex flex-row gap-[100px] scrollbar-thin scrollbar-thumb-[#22222a]  ">
+        <div className="w-full overflow-x-scroll flex flex-row gap-[100px] scrollbar-thin scrollbar-thumb-[#22222a]  ">
           {genre.map((item) => (
             <Link
               key={item.id}
@@ -109,7 +109,7 @@ const NavBar = () => {
               </p>
             </Link>
           ))}
-        </div> */}
+        </div>
       </div>
     </div>
   );
