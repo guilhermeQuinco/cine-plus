@@ -12,11 +12,11 @@ const Card = ({ movie }: CardProps) => {
   return (
     <Link href={`/details/${movie.id}`}>
       {" "}
-      <div className="group w-full relative hover:scale-125 hover:z-10 hover:shadow-xl transition ease-linear duration-100 rounded-lg ">
+      <div className="group w-full relative hover:scale-150 hover:z-10 hover:shadow-xl transition ease-linear duration-100 rounded-lg ">
         <img
-          src={`${BASE_URL_IMAGE}/${movie.poster_path}`}
+          src={`${BASE_URL_IMAGE}/${movie.backdrop_path}`}
           alt="poster"
-          className="object-cover w-[100%] h-[350px] rounded-lg group-hover:rounded-b-none "
+          className="object-cover w-[100%] h-[150px] rounded-lg group-hover:rounded-b-none "
         />
 
         <div className="invisible bg-black group-hover:visible gap-3 flex flex-col absolute p-5 group-hover:rounded-b-lg">

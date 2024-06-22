@@ -2,7 +2,7 @@
 
 import { axiosInstance } from "@/app/api/api";
 import Link from "next/link";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 interface IGenre {
@@ -17,12 +17,6 @@ const NavBar = () => {
 
   const router = useRouter();
   const params = useParams();
-  const pathname = usePathname();
-
-  const content = [
-    { href: "/discover/now_playing", title: "Now playing" },
-    { href: "/discover/top_rated", title: "Top Rated" },
-  ];
 
   useEffect(() => {
     axiosInstance
@@ -48,28 +42,47 @@ const NavBar = () => {
 
   return (
     <div className="w-full overflow-hidden">
-      <div className="max-w-[1640px] mx-auto py-5 flex flex-col gap-10 items-center  ">
+      <div className="max-w-[1640px] mx-auto p-5 flex flex-col gap-10 items-center  ">
         <div className="w-full overflow-hidden">
           <div className="flex flex-row justify-between items-center ">
-            <div className="flex flex-row gap-10">
+            <ul className="flex flex-row gap-6">
+              <Link href={"/discover/now_playing"}>
+                <li
+                  className={`navLink ${
+                    selectedGenre === "now_playing" ? "navLinkActive" : ""
+                  }`}
+                >
+                  Now playing
+                </li>
+              </Link>
+
+              <Link href={"/discover/popular"}>
+                <li
+                  className={`navLink ${
+                    selectedGenre === "popular" ? "navLinkActive" : ""
+                  }`}
+                >
+                  Popular
+                </li>
+              </Link>
               <Link
-                href={"/"}
-                className={`px-14 py-3 rounded-full navLink  ${
-                  pathname === "/" ? "navLinkActive" : ""
+                className={`navLink ${
+                  selectedGenre === "top_rated" ? "navLinkActive" : ""
                 }`}
+                href={"/discover/top_rated"}
               >
-                Home
+                <li>Top Rated</li>
               </Link>
 
               <Link
-                href={"/movies"}
-                className={`px-14 py-3 rounded-full navLink transition-all  ${
-                  pathname.includes("/movies") ? "navLinkActive" : ""
+                className={`navLink ${
+                  selectedGenre === "upcoming" ? "navLinkActive" : ""
                 }`}
+                href={"/discover/upcoming"}
               >
-                Movies
+                <li>Upcoming</li>
               </Link>
-            </div>
+            </ul>
 
             <div className="flex flex-row items-center gap-3">
               <form onSubmit={handleSearch}>
@@ -85,23 +98,18 @@ const NavBar = () => {
           </div>
         </div>
 
-        {pathname.includes("/movies") ||
-          (pathname.includes("/genre") && (
-            <div className="w-full overflow-x-scroll flex flex-row gap-[100px] scrollbar-thin scrollbar-thumb-[#22222a]  ">
-              {genre.map((item) => (
-                <Link
-                  key={item.id}
-                  href={`/genre/${
-                    item.id
-                  }?genre=${item.name.toLocaleLowerCase()}`}
-                >
-                  <p key={item.id} className="flex items-center flex-row">
-                    {item.name}
-                  </p>
-                </Link>
-              ))}
-            </div>
+        {/* <div className="w-full overflow-x-scroll flex flex-row gap-[100px] scrollbar-thin scrollbar-thumb-[#22222a]  ">
+          {genre.map((item) => (
+            <Link
+              key={item.id}
+              href={`/genre/${item.id}?genre=${item.name.toLocaleLowerCase()}`}
+            >
+              <p key={item.id} className="flex items-center flex-row">
+                {item.name}
+              </p>
+            </Link>
           ))}
+        </div> */}
       </div>
     </div>
   );
