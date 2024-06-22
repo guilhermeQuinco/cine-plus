@@ -37,8 +37,8 @@ export default function Home() {
 
   return (
     <main className="w-full overflow-hidden ">
-      <div className="max-w-[1640px] mx-auto flex h-full flex-col  gap-10 items-center">
-        <Slider {...settings} className="w-full h-full  flex mt-[50px] ">
+      <div className="max-w-[1640px] mx-auto flex h-full flex-col  gap-10 items-center ">
+        <Slider {...settings} className="w-full h-full space-x-10 mt-[50px]">
           {slideMovies.map((movie) => (
             <Card movie={movie} key={movie.id} />
           ))}
