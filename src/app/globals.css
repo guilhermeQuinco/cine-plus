@@ -104,10 +104,10 @@ body {
   }
 
   .navLink {
-    @apply text-gray-600;
+    @apply text-gray-600 px-10 py-3 hover:bg-slate-700/50 hover:scale-105 rounded-full transition-all ease-out duration-150;
   }
 
   .navLinkActive {
-    @apply text-white;
+    @apply text-white px-10 py-3 rounded-full hover:scale-125 transition-all ease-out duration-150 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500;
   }
 }

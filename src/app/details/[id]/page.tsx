@@ -48,15 +48,13 @@ const MovieDetails = () => {
 
   return (
     <div className="w-full">
+      <img
+        src={`${BASE_URL_IMAGE}/${movie?.backdrop_path}`}
+        alt="Background "
+        className="-z-10 rounded-lg w-full"
+      />
       <div className="max-w-[1660px] mx-auto px-6 py-10 flex flex-col">
-        <div className="flex flex-row gap-[40px]">
-          <Image
-            src={`${BASE_URL_IMAGE}/${movie?.poster_path}`}
-            alt="Background "
-            className="-z-10 rounded-lg"
-            width={400}
-            height={200}
-          />
+        <div className="flex items-center lg:flex-row flex-col gap-[40px]">
           <div className="flex flex-col gap-10">
             <h1 className="text-5xl font-bold">{movie?.original_title}</h1>
 
@@ -77,7 +75,7 @@ const MovieDetails = () => {
         </div>
         <div className="flex flex-col gap-5 mt-[50px]">
           <h2 className="text-3xl font-bold">Similar</h2>
-          <div className="grid grid-cols-6 gap-5">
+          <div className="grid lg:grid-cols-6 grid-cols-2 gap-5">
             {recommendationMovies.map((recommend) => (
               <Card movie={recommend} key={recommend.id} />
             ))}

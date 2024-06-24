@@ -4,20 +4,20 @@ import { axiosInstance } from "@/app/api/api";
 import { IMovie } from "@/models/IMovie";
 import { useEffect, useState } from "react";
 
-export function useGetPopularMovies() {
-  const [popularMovies, setPopularMovies] = useState<IMovie[]>([]);
+export function useGetTopRatedMovies() {
+  const [topRatedMovies, setTopRatedMovies] = useState<IMovie[]>([]);
 
   useEffect(() => {
     axiosInstance
-      .get("/movie/popular", {
+      .get("/movie/top_rated", {
         params: {
           api_key: process.env.NEXT_PUBLIC_API_KEY,
         },
       })
       .then((response) => {
-        setPopularMovies((prev) => [...prev, ...response.data.results]);
+        setTopRatedMovies((prev) => [...prev, ...response.data.results]);
       });
   }, []);
 
-  return { popularMovies };
+  return { topRatedMovies };
 }
