@@ -116,7 +116,7 @@ const NavBar = () => {
           </div>
 
           <div
-            className={`fixed  bg-slate-600 w-full h-full top-0 right-0 z-50 mt-[60px] ${
+            className={`fixed bg-slate-600 w-full h-full top-0 right-0 z-50 mt-[60px] ${
               open ? "" : "hidden"
             }`}
           >

@@ -11,3 +11,5 @@ export const axiosInstance = axios.create({
     Authorization: `Bearer ${token}`,
   },
 });
+
+const variable = "";

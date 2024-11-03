@@ -19,7 +19,7 @@ const Movies = () => {
 
   return (
     <section className="w-full overflow-hidden mt-[100px]">
-      <div className="max-w-[1640px] mx-auto flex flex-col gap-20">
+      <div className="max-w-[1640px] mx-auto flex flex-col gap-20 ">
         <div>
           <h1>Popular Movies</h1>
 
